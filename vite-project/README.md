@@ -1,19 +1,24 @@
 App --> TodoList
-TodoList --> TodoItem
 TodoList --> AddTodoForm
+TodoList --> TodoItem
 TodoList --- useTodos
+
 subgraph useTodosHook
 A[todos state]
 B[isLoading]
 C[error]
 D[deleteTodo(id)]
-E[toggleTodo(id)]
-F[addLocalTodo(todo)]
+E[toggleTodo(id, completed)]
+F[addTodoLocal(text)]
 end
+
 TodoItem -->|onToggle| useTodos
+TodoItem -->|onDelete| useTodos
 AddTodoForm -->|onAdd| useTodos
 
-useTodos` містить список джерел істини та логіку API.
-- `TodoList` зчитує `todos` та передає кожен елемент до `TodoItem` через props.
-- `TodoItem` зберігає власний стан інтерфейсу `completed` (для негайної реакції) та викликає `toggleTodo(id)` хука для збереження.
-- Додавання todo є лише локальним (без POST до фальшивого API) та використовує `addLocalTodo` для оновлення стану хука.
+Пояснення:
+useTodos містить єдине джерело істини для списку та логіку API:
+TodoList зчитує todos і передає їх у TodoItem через props.
+TodoItem зберігає локальний стан completed (для негайної реакції) і викликає toggleTodo(id, completed) для оновлення на API.
+Видалення виконується через deleteTodo(id) із хуку.
+Додавання todo є локальним (без POST-запиту до API) і використовує addTodoLocal(text) для оновлення стану хуку.
