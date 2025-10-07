@@ -22,3 +22,4 @@ TodoList зчитує todos і передає їх у TodoItem через props.
 TodoItem зберігає локальний стан completed (для негайної реакції) і викликає toggleTodo(id, completed) для оновлення на API.
 Видалення виконується через deleteTodo(id) із хуку.
 Додавання todo є локальним (без POST-запиту до API) і використовує addTodoLocal(text) для оновлення стану хуку.
+------------Lab_4-----------------
